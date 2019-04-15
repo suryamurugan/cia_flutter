@@ -61,7 +61,9 @@ void main() {
         MainScreen.routeName: (BuildContext context) => new MainScreen(),
         //ClaimPoints.routeName: (BuildContext context) => new ClaimPoints(),
 
-      }));
+
+
+  }));
 }
 // define the routes
 //SettingsScreen.routeName: (BuildContext context) => new SettingsScreen(),

@@ -20,7 +20,8 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^0.5.2
-
+  firebase_messaging: ^2.0.0
+  #firebase_core: ^0.2.5  # add dependency for Firebase Core
 
 
   # The following adds the Cupertino Icons font to your application.

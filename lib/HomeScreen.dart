@@ -6,6 +6,11 @@ import 'dart:convert';
 import 'package:cia_flutter/ProjectList.dart';
 import 'ciapros.dart';
 
+import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -25,7 +30,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomeScreen> {
-
+  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 String token='';
 String username='';
 
@@ -131,12 +136,51 @@ String username='';
 
   }
 
+  void firebaseCloudMessaging_Listeners() {
+  //  if (Platform.isIOS) iOS_Permission();
+
+    _firebaseMessaging.getToken().then((token){
+      print("this is token : ");
+      print(token);
+      print("done : ");
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+    );
+  }
+
 
   @override
   initState() {
 
     super.initState();
+    firebaseCloudMessaging_Listeners();
     _check();
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) {
+        print('on launch $message');
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.getToken().then((token){
+      print(token);
+    });
    // _read();
     //_login();
 
